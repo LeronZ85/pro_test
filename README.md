@@ -15,7 +15,7 @@
 
 ```
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import static junit.framework.TestCase.fail;
@@ -48,12 +48,11 @@ public class Main {
         int firstIntIndex = -1, lastIntIndex = -1, faster = 0;
         int temp = 0;
         int preSpaceIndex = -1;
-        List<Integer> list = new ArrayList<>();
-
+        long result = 0;
         while (faster < ipStr.length()) {
             if (isSpot(ipStr, faster)) {
                 checkSpace(preSpaceIndex, firstIntIndex, lastIntIndex);
-                list.add(temp);
+                result = result * 256 + temp;
                 temp = 0;
                 firstIntIndex = -1;
                 lastIntIndex = -1;
@@ -71,16 +70,13 @@ public class Main {
             }
             faster++;
         }
-        list.add(temp);
-        long result = 0;
-        for (int data : checkNum(list)) {
-            result = result * 256 + data;
-        }
+        result = result * 256 + temp;
         return result;
     }
 
     /**
      * IPV4 最多4组数字
+     *
      * @param list
      */
     private static List<Integer> checkNum(List<Integer> list) {
@@ -92,6 +88,7 @@ public class Main {
 
     /**
      * 17 2.168.5.1 不是合法的IP地址
+     *
      * @param preSpaceIndex
      * @param firstIntIndex
      * @param lastIntIndex
@@ -110,15 +107,13 @@ public class Main {
         return ipStr.charAt(faster) - '0';
     }
 
-    private static Character SPOT = '.';
-
-    private static Character BLANK = ' ';
-
     private static boolean isSpot(String ipStr, int faster) {
+        Character SPOT = '.';
         return (SPOT).equals(ipStr.charAt(faster));
     }
 
     private static boolean isBlank(String ipStr, int faster) {
+        Character BLANK = ' ';
         return (BLANK).equals(ipStr.charAt(faster));
     }
 
@@ -126,5 +121,7 @@ public class Main {
         return ipStr.charAt(faster) >= '0' && ipStr.charAt(faster) <= '9';
     }
 
+
 }
+
 ```
